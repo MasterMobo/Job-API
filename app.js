@@ -1,29 +1,43 @@
-require("dotenv").config()  // Load environment variable
-require("express-async-errors") // Takes care of async errors (no more asyncWrappers!)
+require("dotenv").config();
+require("express-async-errors");
+const express = require("express");
+const app = express();
 
-const express = require("express")
-const app = express()
-
-const connectDB = require("./db/connect")
-const product_router = require("./routes/products_router")
+// Routers
+const auth_routes = require("./routes/auth");
+const jobs_routes = require("./routes/jobs");
 
 // Middleware
-const notFound = require("./middleware/not-found")
-const errorHandler = require("./middleware/error-handler")
-app.use(express.json())
+app.use(express.json());
+const notFoundMiddleware = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler"); // error handler
+const authenticateJWT = require("./middleware/authentication");
 
-// Routes
-app.use("/api/v1/products", product_router)
-app.use(notFound)
-app.use(errorHandler)
+// extra packages
+const connectDB = require("./db/connect");
 
-const PORT = process.env.PORT || 5000
+// routes
+app.get("/", (req, res) => {
+  res.send("jobs api");
+});
+
+app.use("/api/v1/auth", auth_routes);
+app.use("/api/v1/jobs", authenticateJWT, jobs_routes);
+app.use(notFoundMiddleware);
+app.use(errorHandlerMiddleware);
+
+const port = process.env.PORT || 5000;
+
 const start = async () => {
-    try{
-        await connectDB(process.env.MONGO_URI)
-        app.listen(PORT, console.log(`Server is listening on port ${PORT}`))
-    } catch(err){
-        console.log(err)
-    }
-}
-start()
+  try {
+    await connectDB(process.env.MONGO_URI);
+    console.log("Sucessfully connected to MongoDB!");
+    app.listen(port, () =>
+      console.log(`Server is listening on port ${port}...`)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();

@@ -7,7 +7,6 @@ const connectDB = (url) => {
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(console.log("Successfully connected to MongoDB"))
 }
 
 module.exports = connectDB
