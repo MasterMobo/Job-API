@@ -13,8 +13,8 @@ npm install && npm start
 
 #### Routers
 
-- auth.js
-- jobs.js
+-   auth.js
+-   jobs.js
 
 #### User Model
 
@@ -26,44 +26,62 @@ Email Validation Regex
 
 #### Register User
 
-- Validate - name, email, password - with Mongoose
-- Hash Password (with bcryptjs)
-- Save User
-- Generate Token
-- Send Response with Token
+-   Validate - name, email, password - with Mongoose
+-   Hash Password (with bcryptjs)
+-   Save User
+-   Generate Token
+-   Send Response with Token
 
 #### Login User
 
-- Validate - email, password - in controller
-- If email or password is missing, throw BadRequestError
-- Find User
-- Compare Passwords
-- If no user or password does not match, throw UnauthenticatedError
-- If correct, generate Token
-- Send Response with Token
+-   Validate - email, password - in controller
+-   If email or password is missing, throw BadRequestError
+-   Find User
+-   Compare Passwords
+-   If no user or password does not match, throw UnauthenticatedError
+-   If correct, generate Token
+-   Send Response with Token
 
 #### Mongoose Errors
 
-- Validation Errors
-- Duplicate (Email)
-- Cast Error
+-   Validation Errors
+-   Duplicate (Email)
+-   Cast Error
 
 #### Security
 
-- helmet
-- cors
-- xss-clean
-- express-rate-limit
+-   helmet
+-   cors
+-   xss-clean
+-   express-rate-limit
 
 Swagger UI
 
 ```yaml
 /jobs/{id}:
-  parameters:
-    - in: path
-      name: id
-      schema:
-        type: string
-      required: true
-      description: the job id
+    parameters:
+        - in: path
+          name: id
+          schema:
+              type: string
+          required: true
+          description: the job id
 ```
+
+### Dependencies
+
+-   Dev Dependencies:
+    -   nodemon
+-   Dependencies:
+    -   express
+    -   mongoose
+    -   dotenv
+    -   express-async-errors
+    -   http-status-codes
+    -   bcryptjs
+    -   json-web-token
+-   Security:
+    -   helmet
+    -   cors
+    -   xss-clean
+    -   express-rate-limit
